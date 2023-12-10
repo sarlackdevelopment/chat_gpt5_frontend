@@ -1,10 +1,8 @@
+import Main from "./components/chat/main";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 function App() {
-  return (
-    <div>
-      It works!
-        <button onClick={(e) => fetch('http://localhost:5094/User/users').then((res) => console.log(res))}>GO!</button>
-    </div>
-  );
+  return <><Main /></>;
 }
 
 export default App;
