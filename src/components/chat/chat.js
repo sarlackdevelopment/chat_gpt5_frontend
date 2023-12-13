@@ -4,6 +4,7 @@ import { ListGroup, Stack, Spinner, Alert } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import {messagesService, storeMessagesService} from "../../services/messagesService";
 import {useObservable} from "../../observable/useObservable";
+import {storeUsersService} from "../../services/usersService";
 
 const ChatMessage = ({ author, message }) => {
     return (
@@ -19,22 +20,22 @@ const ChatMessage = ({ author, message }) => {
 
 const Chat = () => {
     const messages = useObservable(storeMessagesService.messages);
-    const loading = useObservable(storeMessagesService.loading);
-    const error = useObservable(storeMessagesService.error);
+    const loadingMessageList = useObservable(storeMessagesService.loadingMessageList);
+    const errorMessageList = useObservable(storeMessagesService.errorMessageList);
 
     useEffect(() => {
         messagesService.setMessages();
     }, []);
 
-    if (loading) {
+    if (loadingMessageList) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading messages...</span>
         </Spinner>
     }
 
-    if (error) {
+    if (errorMessageList) {
         return <Alert variant='danger'>
-            {`Something wrong during loading ${error}`}
+            {`Something wrong during loading ${errorMessageList}`}
         </Alert>
     }
 
