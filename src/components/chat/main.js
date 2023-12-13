@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Chat from "./chat";
 import MessageInput from "./messageInput";
 import UserDetailsModal from "./userDetailsModal";
+import { Container, Row } from "react-bootstrap";
 
 const Main = () => {
     const [messages, setMessages] = useState([]); // Состояние для сообщений
@@ -10,11 +11,13 @@ const Main = () => {
     // Функции для обработки событий...
 
     return (
-        <div>
-            <Chat />
-            <MessageInput />
-            <UserDetailsModal />
-        </div>
+        <Container>
+            <Row>
+                <Chat />
+                <MessageInput />
+                <UserDetailsModal />
+            </Row>
+        </Container>
     );
 };
 

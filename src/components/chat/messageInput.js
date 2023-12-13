@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
-const MessageInput = ({ onSendMessage }) => {
+const MessageInput = () => {
     const [message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSendMessage(message);
+        //onSendMessage(message);
         setMessage('');
     };
 
