@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { ListGroup, Stack, Spinner, Alert } from 'react-bootstrap';
 
 import Card from 'react-bootstrap/Card';
 import {messagesService, storeMessagesService} from "../../services/messagesService";
 import {useObservable} from "../../observable/useObservable";
-import {storeUsersService} from "../../services/usersService";
+import {HubConnectionBuilder, HubConnectionState} from '@microsoft/signalr';
 
 const ChatMessage = ({ author, message }) => {
     return (
@@ -19,6 +19,45 @@ const ChatMessage = ({ author, message }) => {
 }
 
 const Chat = () => {
+
+    const [connection, setConnection] = useState(null);
+
+    useEffect(() => {
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('http://localhost:5094/chatHub')
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
+    }, []);
+
+    useEffect(() => {
+        if (connection) {
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
+
+                    connection.on('ReceiveMessage', (user, message) => {
+                        console.log('New Message', { user, message });
+                        // Обработка полученного сообщения
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    }, [connection]);
+
+    const sendMessage = async (user, message) => {
+        if (connection && connection.state === HubConnectionState.Connected) {
+            try {
+                await connection.send('SendMessage', user, message);
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            alert('No connection to server yet.');
+        }
+    };
+
     const messages = useObservable(storeMessagesService.messages);
     const loadingMessageList = useObservable(storeMessagesService.loadingMessageList);
     const errorMessageList = useObservable(storeMessagesService.errorMessageList);
@@ -41,6 +80,9 @@ const Chat = () => {
 
     return (
         <Stack gap={3}>
+            <div>
+                <button onClick={() => sendMessage('Alex', 'It works!!!')}>Send</button>
+            </div>
             <ListGroup>
                 {messages?.length !== 0 ? messages?.map((message, index) => (
                     <ChatMessage
