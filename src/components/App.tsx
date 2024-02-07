@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Container, Row } from 'react-bootstrap';
+import ChatComponent from './ChatField/index.';
 
 const App = () => {
     return (
@@ -12,7 +13,7 @@ const App = () => {
             </Row>
             <Row>
                 <Col md={ 8 }>
-                    <>Messages</>
+                    <ChatComponent />
                 </Col>
                 <Col md={ 4 }>
                     <>Buttons</>
