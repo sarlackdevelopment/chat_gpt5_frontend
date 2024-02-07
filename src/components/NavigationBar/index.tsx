@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Rooms from '../Rooms';
 import ChatComponent from '../ChatField';
 import AuthForm from '../Login';
+import ProtectedRoute from '../Login/ProtectedRoute';
 
 const NavigationBar = () => {
     return (
@@ -20,9 +21,18 @@ const NavigationBar = () => {
             </Navbar>
 
             <Routes>
+                { /*<Route path="/" element={ <AuthForm /> } />*/ }
+                { /*<Route path="/chat" element={ <ChatComponent /> } />*/ }
+                { /*<Route path="/rooms" element={ <Rooms /> } />*/ }
                 <Route path="/" element={ <AuthForm /> } />
-                <Route path="/chat" element={ <ChatComponent /> } />
-                <Route path="/rooms" element={ <Rooms /> } />
+                <Route
+                    path="/chat"
+                    element={ <ProtectedRoute component={ ChatComponent } allowedRoles={ ['user', 'moderator'] } /> }
+                />
+                <Route
+                    path="/rooms"
+                    element={ <ProtectedRoute component={ Rooms } allowedRoles={ ['moderator'] } /> }
+                />
             </Routes>
         </Router>
     );

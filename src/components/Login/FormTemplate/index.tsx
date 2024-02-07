@@ -2,9 +2,9 @@ import { Button, Form } from 'react-bootstrap';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const FormTemplate = ({ caption }) => {
+const FormTemplate = ({ caption }: { caption: string }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const onSubmit = (data: any) => {
         console.log(data);
     };
     return (
