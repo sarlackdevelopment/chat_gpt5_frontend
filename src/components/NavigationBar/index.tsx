@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from '../Home';
 import Rooms from '../Rooms';
-import ChatComponent from '../ChatField/index.';
+import ChatComponent from '../ChatField';
+import AuthForm from '../Login';
 
 const NavigationBar = () => {
     return (
@@ -20,7 +20,7 @@ const NavigationBar = () => {
             </Navbar>
 
             <Routes>
-                <Route path="/" element={ <Home /> } />
+                <Route path="/" element={ <AuthForm /> } />
                 <Route path="/chat" element={ <ChatComponent /> } />
                 <Route path="/rooms" element={ <Rooms /> } />
             </Routes>
