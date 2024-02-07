@@ -39,7 +39,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            favicon: './public/fav.ico'
+            favicon: './public/fav.ico',
+            publicPath: '/'
         }),
         new CopyPlugin({
             patterns: [
@@ -48,5 +49,11 @@ module.exports = {
                 { from: 'node_modules/@types/react/index.d.ts', to: 'path/to/@types/react/index.d.ts' }
             ]
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        static: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3000
+    }
 };

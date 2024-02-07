@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
 import style from './styles.module.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ChatComponent = () => {
     const [messages, setMessages] = useState([]);
@@ -17,7 +16,7 @@ const ChatComponent = () => {
 
     return (
         <Container fluid>
-            <Row className="justify-content-center mt-4">
+            <Row className="justify-content-center">
                 <Col>
                     <ListGroup>
                         { messages.map((message, index) => (
