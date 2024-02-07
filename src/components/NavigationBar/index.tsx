@@ -5,8 +5,10 @@ import Rooms from '../Rooms';
 import ChatComponent from '../ChatField';
 import AuthForm from '../Login';
 import ProtectedRoute from '../Login/ProtectedRoute';
+import { useAuth } from '../Login/useAuth';
 
 const NavigationBar = () => {
+    const { logout } = useAuth();
     return (
         <>
             <Navbar bg="light" expand="lg">
@@ -16,6 +18,9 @@ const NavigationBar = () => {
                         <Link to="/" className="nav-link">Home</Link>
                         <Link to="/chat" className="nav-link">Chat</Link>
                         <Link to="/rooms" className="nav-link">Rooms</Link>
+                    </Nav>
+                    <Nav className="ms-auto">
+                        <Nav.Link onClick={ logout } className="justify-content-end">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

@@ -15,11 +15,10 @@ const FormTemplate = ({ caption }: { caption: string }) => {
             <Form.Group className="mb-3">
                 <Form.Label>Электронная почта</Form.Label>
                 <Form.Control
-                    type="email"
-                    { ...register('email', { required: true }) }
-                    placeholder="Введите email"
+                    { ...register('username', { required: true }) }
+                    placeholder="Введите имя пользователя"
                 />
-                { errors.email && <span className="text-danger">Это поле обязательно</span> }
+                { errors.username && <span className="text-danger">Это поле обязательно</span> }
             </Form.Group>
 
             <Form.Group className="mb-3">

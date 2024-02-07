@@ -1,19 +1,25 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, FC, ReactNode, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authService, IUser, storeAuthService } from '../../services/authService';
+import { useObservable } from '../../observable/useObservable';
 
 const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }: { children: any }) => {
-    const [user, setUser] = useState(null);
+interface IProps {
+    children: ReactNode;
+}
+
+export const AuthProvider: FC<IProps> = ({ children }) => {
+    const user = useObservable(storeAuthService.user);
     const navigate = useNavigate();
 
-    const login = (userData: any) => {
-        setUser(userData);
+    const login = (userData: IUser) => {
+        authService.login(userData);
         navigate('/chat');
     };
 
     const logout = () => {
-        setUser(null);
+        authService.logout();
         navigate('/');
     };
 
