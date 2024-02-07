@@ -1,11 +1,14 @@
 import { Button, Form } from 'react-bootstrap';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../useAuth';
 
 const FormTemplate = ({ caption }: { caption: string }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { login } = useAuth();
     const onSubmit = (data: any) => {
         console.log(data);
+        login(data);
     };
     return (
         <Form onSubmit={ handleSubmit(onSubmit) }>
