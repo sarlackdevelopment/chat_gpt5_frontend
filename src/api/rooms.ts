@@ -11,3 +11,27 @@ export const getRooms = async () => {
         console.error('Ошибка получения списка комнат:', error.response ? error.response.data : error.message);
     }
 };
+
+export const deleteRoom = async (roomId: string) => {
+    try {
+        const response = await axios.delete(`/ChatRoom/${roomId}`);
+        console.log(`Комната ${roomId} успешно удалена`);
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка удаления комнаты:', error.response ? error.response.data : error.message);
+    }
+}
+
+export const createRoom = async (roomName: string) => {
+    try {
+        const response = await axios.post('ChatRoom/create', {
+            name: roomName,
+            messages: [],
+            users: []
+        });
+        console.log(`Комната ${roomName} успешно создана`);
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка создания комнаты:', error.response ? error.response.data : error.message);
+    }
+}

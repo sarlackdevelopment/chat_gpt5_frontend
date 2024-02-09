@@ -1,5 +1,5 @@
 import { Observable } from '../observable/observable';
-import { getRooms } from '../api/rooms';
+import { createRoom, deleteRoom, getRooms } from '../api/rooms';
 
 export interface IRoom {
     id: string;
@@ -11,12 +11,18 @@ export const storeRoomService = {
 };
 
 class RoomService {
-    // public setRoom = async ({ id, name }: IRoom) => {
-    //     loginUser({ username, password }).then(() => storeAuthService.user.set({ username, password }));
-    // }
-
     public getRooms = async () => {
         const rooms = await getRooms();
+        storeRoomService.rooms.set(rooms);
+    }
+
+    public deleteRoom = async (roomId: string) => {
+        const rooms = await deleteRoom(roomId);
+        storeRoomService.rooms.set(rooms);
+    }
+
+    public createRoom = async (roomName: string) => {
+        const rooms = await createRoom(roomName);
         storeRoomService.rooms.set(rooms);
     }
 }

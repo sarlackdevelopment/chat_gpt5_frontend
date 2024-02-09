@@ -4,29 +4,26 @@ import { roomService, storeRoomService } from '../../services/roomService';
 import { useObservable } from '../../observable/useObservable';
 
 const Rooms = () => {
-    //const [rooms, setRooms] = useState([]);
     const rooms = useObservable(storeRoomService.rooms);
     const [roomName, setRoomName] = useState('');
     useEffect(() => {
         roomService.getRooms();
     }, []);
 
-    const addRoom = (e: FormEvent<HTMLFormElement>) => {
-        // e.preventDefault();
-        // if (!roomName.trim()) return;
-        // setRooms([...rooms, roomName]);
-        // setRoomName('');
+    const createRoom = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        roomService.createRoom(roomName);
     };
 
-    const deleteRoom = (roomIndex: number) => {
-        //setRooms(rooms.filter((_, index) => index !== roomIndex));
+    const deleteRoom = (roomId: string) => {
+        roomService.deleteRoom(roomId)
     };
 
     return (
         <Container className='mt-2'>
             <Row className="justify-content-md-center">
                 <Col md={ 6 }>
-                    <Form onSubmit={ addRoom } className="mb-3">
+                    <Form onSubmit={ createRoom } className="mb-3">
                         <InputGroup>
                             <Form.Control
                                 type="text"
@@ -39,15 +36,23 @@ const Rooms = () => {
                     </Form>
 
                     <ListGroup>
-                        { rooms?.map((room, index) => (
-                            <ListGroup.Item key={ index } className="d-flex justify-content-between align-items-center">
-                                { room.name }
-                                <Button
-                                    variant="outline-danger"
-                                    size="sm"
-                                    onClick={ () => deleteRoom(index) }>
+                        { rooms?.map(({ name, id }) => (
+                            <ListGroup.Item key={ id } className="d-flex justify-content-between align-items-center">
+                                { name }
+                                <div>
+                                    <Button
+                                        variant="outline-danger"
+                                        size="sm"
+                                        onClick={ () => deleteRoom(id) }>
                                     Удалить
-                                </Button>
+                                    </Button>
+                                    <Button
+                                        variant="outline-primary"
+                                        size="sm"
+                                        onClick={ () => {} }>
+                                    Детали
+                                    </Button>
+                                </div>
                             </ListGroup.Item>
                         )) }
                     </ListGroup>
