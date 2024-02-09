@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Container, Row } from 'react-bootstrap';
 import NavigationBar from './NavigationBar';
 import { AuthProvider } from './Login/useAuth';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {
+    setRedirectToForbiddenPageFunction,
+    setRedirectToUnauthorizedPageFunction
+} from '../api/configuration/redirect';
 
 const App = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        setRedirectToForbiddenPageFunction(navigate);
+        setRedirectToUnauthorizedPageFunction(navigate);
+    }, [navigate]);
     return (
-        <Router>
-            <Container fluid>
-                <Row>
-                    <Col md={ 12 }>
-                        <AuthProvider>
-                            <NavigationBar />
-                        </AuthProvider>
-                    </Col>
-                </Row>
-            </Container>
-        </Router>
+        <Container fluid>
+            <Row>
+                <Col md={ 12 }>
+                    <AuthProvider>
+                        <NavigationBar />
+                    </AuthProvider>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

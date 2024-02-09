@@ -6,6 +6,8 @@ import ChatComponent from '../ChatField';
 import AuthForm from '../Login';
 import ProtectedRoute from '../Login/ProtectedRoute';
 import { useAuth } from '../Login/useAuth';
+import ErrorPage from '../ErrorPage/403';
+import UnauthorizedPage from '../ErrorPage/401';
 
 const NavigationBar = () => {
     const { logout } = useAuth();
@@ -35,6 +37,8 @@ const NavigationBar = () => {
                     path="/rooms"
                     element={ <ProtectedRoute component={ Rooms } allowedRoles={ ['moderator'] } /> }
                 />
+                <Route path="/forbidden" element={ <ErrorPage /> } />
+                <Route path="/unauthorized" element={ <UnauthorizedPage /> } />
             </Routes>
         </>
     );

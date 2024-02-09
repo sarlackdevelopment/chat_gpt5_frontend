@@ -14,6 +14,5 @@ export const loginUser = async ({ username, password }: IUser) => {
         return response.data;
     } catch (error) {
         console.error('Ошибка авторизации:', error.response ? error.response.data : error.message);
-        throw error;
     }
 };

@@ -11,8 +11,9 @@ export const storeAuthService = {
 };
 
 class AuthService {
-    public login = ({ username, password }: IUser) => {
-        loginUser({ username, password }).then(() => storeAuthService.user.set({ username, password }));
+    public login = async ({ username, password }: IUser) => {
+        await loginUser({ username, password });
+        storeAuthService.user.set({ username, password })
     }
     public logout = () => {
         localStorage.removeItem('tokenGPT5');
