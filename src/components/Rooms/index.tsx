@@ -1,13 +1,18 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Button, Form, InputGroup, ListGroup, Container, Row, Col } from 'react-bootstrap';
-import { roomService, storeRoomService } from '../../services/roomService';
+import { IRoom, roomService, storeRoomService } from '../../services/roomService';
 import { useObservable } from '../../observable/useObservable';
+import { userService } from '../../services/userService';
+import RoomDetails from './Details';
 
 const Rooms = () => {
     const rooms = useObservable(storeRoomService.rooms);
     const [roomName, setRoomName] = useState('');
+    const [selectedRoom, setSelectedRoom] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         roomService.getRooms();
+        userService.getUsers();
     }, []);
 
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
@@ -17,6 +22,12 @@ const Rooms = () => {
 
     const deleteRoom = (roomId: string) => {
         roomService.deleteRoom(roomId)
+    };
+
+    const handleShowDetails = (room: IRoom) => {
+        console.log(room);
+        setSelectedRoom(room);
+        setShowModal(true);
     };
 
     return (
@@ -49,7 +60,7 @@ const Rooms = () => {
                                     <Button
                                         variant="outline-primary"
                                         size="sm"
-                                        onClick={ () => {} }>
+                                        onClick={ () => handleShowDetails({ name, id }) } >
                                     Детали
                                     </Button>
                                 </div>
@@ -58,6 +69,11 @@ const Rooms = () => {
                     </ListGroup>
                 </Col>
             </Row>
+            <RoomDetails
+                show={ showModal }
+                onHide={ () => setShowModal(false) }
+                room={ selectedRoom }
+            />
         </Container>
     );
 };
