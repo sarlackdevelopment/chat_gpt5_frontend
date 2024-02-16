@@ -39,6 +39,7 @@ const Rooms = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Название новой комнаты"
+                                required
                                 value={ roomName }
                                 onChange={ (e) => setRoomName(e.target.value) }
                             />
