@@ -7,13 +7,15 @@ export interface IUser {
 }
 
 export const storeAuthService = {
-    user: new Observable<IUser>({})
+    user: new Observable<IUser>({}),
+    currentUserId: new Observable<string>('')
 };
 
 class AuthService {
     public login = async ({ username, password }: IUser) => {
-        await loginUser({ username, password });
-        storeAuthService.user.set({ username, password })
+        const currentUser = await loginUser({ username, password });
+        storeAuthService.user.set({ username, password });
+        storeAuthService.currentUserId.set(currentUser.userId);
     }
     public logout = () => {
         localStorage.removeItem('tokenGPT5');

@@ -1,8 +1,7 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Button, Form, InputGroup, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import { IRoom, roomService, storeRoomService } from '../../services/roomService';
 import { useObservable } from '../../observable/useObservable';
-import { userService } from '../../services/userService';
 import RoomDetails from './Details';
 
 const Rooms = () => {
@@ -10,10 +9,6 @@ const Rooms = () => {
     const [roomName, setRoomName] = useState('');
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    useEffect(() => {
-        roomService.getRooms();
-        userService.getUsers();
-    }, []);
 
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

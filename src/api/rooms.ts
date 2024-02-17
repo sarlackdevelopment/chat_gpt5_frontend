@@ -35,3 +35,13 @@ export const createRoom = async (roomName: string) => {
         console.error('Ошибка создания комнаты:', error.response ? error.response.data : error.message);
     }
 }
+
+export const userRooms = async (userId: string) => {
+    try {
+        const response = await axios.get(`User/${userId}/rooms`);
+        console.log(`Получен список комнат для пользователя ${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Ошибка получения списка комнат:', error.response ? error.response.data : error.message);
+    }
+}
