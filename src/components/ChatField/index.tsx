@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
+import * as signalR from '@microsoft/signalr';
 import style from './styles.module.scss';
 
 const ChatComponent = () => {
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
+    const [connection, setConnection] = useState(null);
+
+    useEffect(() => {
+        const newConnection = new signalR.HubConnectionBuilder()
+            .withUrl('http://localhost:5094/chatHub')
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        setConnection(newConnection);
+
+        newConnection.start()
+            .then(() => console.log('Connected to the chat hub'))
+            .catch(err => console.error('SignalR Connection Error: ', err));
+
+        newConnection.on('ReceiveMessage', (user, message) => {
+            setMessages(messages1 => [...messages1, `${user}: ${message}`]);
+        });
+
+        return () => {
+            newConnection.stop();
+        };
+    }, []);
 
     const handleSendMessage = (e: any) => {
         e.preventDefault();
         if (currentMessage.trim() !== '') {
-            setMessages([...messages, currentMessage]);
+            connection.invoke('SendMessage', 'User', currentMessage)
+                .catch((err: any) => console.error(err));
             setCurrentMessage('');
         }
     };
+
 
     return (
         <Container fluid>

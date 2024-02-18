@@ -5,7 +5,7 @@ import { useObservable } from '../../observable/useObservable';
 import { roomService, storeRoomService } from '../../services/roomService';
 import { storeAuthService } from '../../services/authService';
 
-const RoomsComponent = () => {
+const RoomTabs = () => {
     const currentUserId = useObservable(storeAuthService.currentUserId);
     const userRooms = useObservable(storeRoomService.userRooms);
     const [activeKey, setActiveKey] = useState(userRooms?.[0]?.id);
@@ -34,4 +34,4 @@ const RoomsComponent = () => {
     );
 };
 
-export default RoomsComponent;
+export default RoomTabs;

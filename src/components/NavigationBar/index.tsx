@@ -7,7 +7,7 @@ import ProtectedRoute from '../Login/ProtectedRoute';
 import { useAuth } from '../Login/useAuth';
 import ErrorPage from '../ErrorPage/403';
 import UnauthorizedPage from '../ErrorPage/401';
-import RoomsComponent from '../Tabs';
+import RoomTabs from '../Tabs';
 import { roomService } from '../../services/roomService';
 import { userService } from '../../services/userService';
 
@@ -37,7 +37,7 @@ const NavigationBar = () => {
                 <Route path="/" element={ <AuthForm /> } />
                 <Route
                     path="/chat"
-                    element={ <ProtectedRoute component={ RoomsComponent } allowedRoles={ ['user', 'moderator'] } /> }
+                    element={ <ProtectedRoute component={ RoomTabs } allowedRoles={ ['user', 'moderator'] } /> }
                 />
                 <Route
                     path="/rooms"
